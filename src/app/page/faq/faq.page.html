@@ -1,0 +1,17 @@
+<ion-header>
+  <ion-toolbar color="warning">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+
+    <ion-title> {{ text.faq_title }} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="data">
+  <ion-card mode="ios">
+    <ion-card-content>
+      <span [innerHTML]="data.faq" style="text-align: justify"></span>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

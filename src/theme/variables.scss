@@ -4,12 +4,14 @@
 /** Ionic CSS Variables **/
 :root {
   /** primary **/
-  --ion-color-primary: #3880ff;
+  --ion-color-primary: #ffce00;
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
   --ion-color-primary-shade: #3171e0;
   --ion-color-primary-tint: #4c8dff;
+
+  --ion-color-white: #ffffff;
 
   /** secondary **/
   --ion-color-secondary: #0cd1e8;
@@ -74,4 +76,48 @@
   --ion-color-light-contrast-rgb: 0, 0, 0;
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
+}
+
+.welcome_header {
+  background-color: #000000;
+  height: 25%;
+  border-bottom-right-radius: 25%;
+  border-bottom-left-radius: 25%;
+  margin-top: -6%;
+}
+
+.toolbar-background {
+  padding: 0px 0px;
+}
+
+.button-block,
+button-large {
+  font-size: 18px !important;
+}
+
+ion-button {
+  --background-activated: #000000;
+}
+
+.my-custom-modal-css .modal-wrapper {
+  height: 80%;
+  top: 20%;
+  position: absolute;
+  display: block;
+}
+
+ion-label {
+  white-space: normal !important;
+}
+
+a {
+  text-decoration: none;
+}
+
+.donePage {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.897);
+  height: 30%;
+  border-bottom-left-radius: 15%;
+  border-bottom-right-radius: 15%;
 }

@@ -1,5 +1,7 @@
 {
   "name": "fds",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

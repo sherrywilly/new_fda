@@ -8,6 +8,16 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { OptionPageModule } from './option/option.module';
+import { OfferPageModule } from './offer/offer.module';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
+import { NativeGeocoder} from '@ionic-native/native-geocoder/ngx';
+import { SmsRetriever } from '@ionic-native/sms-retriever/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
+import { PayPal } from '@ionic-native/paypal/ngx';
+import { Stripe } from '@ionic-native/stripe/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,12 +25,23 @@ import { AppRoutingModule } from './app-routing.module';
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    OptionPageModule,
+    OfferPageModule,
   ],
   providers: [
+    Geolocation,
+    NativeGeocoder,
     StatusBar,
     SplashScreen,
-    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+    OneSignal,
+    SmsRetriever,
+    AppVersion,
+    PayPal,
+    Stripe,
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+
   ],
   bootstrap: [AppComponent]
 })

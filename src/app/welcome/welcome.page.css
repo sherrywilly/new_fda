@@ -1,0 +1,39 @@
+:root {
+  --ion-safe-area-top: 20px;
+  --ion-safe-area-bottom: 22px;
+}
+
+.swiper-slide {
+  display: block;
+}
+
+ion-slide > img {
+  width: 80%;
+}
+
+p {
+  padding: 10px 10px;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.swiper-pagination {
+  font-size: 20px;
+}
+
+.start {
+  width: 80%;
+  margin-left: 10%;
+  border-radius: 10px;
+}
+
+.wave-container {
+  position: relative;
+  text-align: center;
+  overflow: hidden;
+}
+
+.wave-container > svg {
+  display: block;
+}
+/*# sourceMappingURL=welcome.page.css.map */

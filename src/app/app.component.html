@@ -1,24 +1,92 @@
-<ion-app>
+<ion-app dir="{{ dir }}">
   <ion-split-pane>
-    <ion-menu type="overlay">
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>Menu</ion-title>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content>
-        <ion-list>
+    <ion-menu swipe-gesture="false" type="push" side="end">
+      <ion-content *ngIf="text">
+        <div style="background-color: #000">
+          <br /><img
+            src="assets/logo.png"
+            class="menu_img"
+            style="width: 90%; margin-left: 5%"
+          /><br /><br />
+        </div>
+
+        <ion-list lines="none">
+          <ion-list-header>
+            {{ text.menu_title }}
+          </ion-list-header>
+
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-            <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
+            <ion-item [routerDirection]="'forward'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
-                {{p.title}}
+                {{ p.title }}
               </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-list-header>
+            {{ text.menu_page_title }}
+          </ion-list-header>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/about" routerDirection="forward">
+              <ion-icon slot="start" name="arrow-round-forward"></ion-icon>
+              <ion-label> {{ text.about_title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/how" routerDirection="forward">
+              <ion-icon slot="start" name="arrow-round-forward"></ion-icon>
+              <ion-label>{{ text.how_title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/faq" routerDirection="forward">
+              <ion-icon slot="start" name="arrow-round-forward"></ion-icon>
+              <ion-label>{{ text.faq_title }}</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerLink="/contact" routerDirection="forward">
+              <ion-icon slot="start" name="arrow-round-forward"></ion-icon>
+              <ion-label>{{ text.contact_title }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
         </ion-list>
       </ion-content>
+      <ion-footer *ngIf="admin">
+        <a href="{{ admin.fb }}" target="_blank" *ngIf="admin.fb"
+          ><ion-icon
+            name="logo-facebook"
+            style="font-size: 25px; padding: 10px 10px; color: #3f51b5"
+          ></ion-icon
+        ></a>
+
+        <a href="{{ admin.insta }}" target="_blank" *ngIf="admin.insta"
+          ><ion-icon
+            name="logo-instagram"
+            style="font-size: 25px; padding: 10px 10px; color: #e91e63"
+          ></ion-icon
+        ></a>
+
+        <a href="{{ admin.youtube }}" target="_blank" *ngIf="admin.youtube"
+          ><ion-icon
+            name="logo-youtube"
+            style="font-size: 25px; padding: 10px 10px; color: #f44336"
+          ></ion-icon
+        ></a>
+
+        <a href="{{ admin.twitter }}" target="_blank" *ngIf="admin.twitter"
+          ><ion-icon
+            name="logo-twitter"
+            style="font-size: 25px; padding: 10px 10px; color: #03a9f4"
+          ></ion-icon
+        ></a>
+      </ion-footer>
     </ion-menu>
-    <ion-router-outlet main></ion-router-outlet>
+    <ion-router-outlet main dir="{{ dir }}"></ion-router-outlet>
   </ion-split-pane>
 </ion-app>

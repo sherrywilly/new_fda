@@ -1,0 +1,21 @@
+.welcome-card img {
+  max-height: 35vh;
+  overflow: hidden;
+}
+
+p {
+  padding: 10px 2px;
+}
+
+.trend {
+  margin-top: -25px;
+}
+
+ion-backdrop {
+  opacity: 0.3;
+}
+
+ion-row ion-col ion-icon {
+  font-size: 20px !important;
+}
+/*# sourceMappingURL=home.page.css.map */

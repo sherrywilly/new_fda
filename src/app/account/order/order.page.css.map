@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,OAAO,CACP;EACC,SAAS,EAAC,IAAI;EACd,UAAU,EAAC,iBAAiB;EAC5B,WAAW,EAAC,GAAG;CACf",
+    "sources": [
+        "order.page.scss"
+    ],
+    "names": [],
+    "file": "order.page.css"
+}
