@@ -12,6 +12,10 @@ import {
   PayPalConfiguration,
 } from "@ionic-native/paypal/ngx";
 import { Stripe } from "@ionic-native/stripe/ngx";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
+declare var google;
+
 declare var RazorpayCheckout: any;
 
 @Component({
@@ -42,19 +46,25 @@ export class CheckoutPage implements OnInit {
   razor_key = "";
   cardDetails: any = {};
   ecash: any = 0;
-
+  orderData: any;
+  restaurant: any;
+  addressCoords: any;
+  extradeliveryCharge = 0
   constructor(
     public server: ServerService,
     public toastController: ToastController,
     public loadingController: LoadingController,
     private nav: NavController,
     private payPal: PayPal,
-    private stripe: Stripe
+    private stripe: Stripe,
+    public geolocation: Geolocation,
+    public nativeGeocoder: NativeGeocoder
   ) {
     this.text = JSON.parse(localStorage.getItem("app_text"));
+
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   setEcash(ec) {
     if (ec > this.total_payable()) {
@@ -68,11 +78,14 @@ export class CheckoutPage implements OnInit {
     if (this.otype == 2 && this.data.d_charges > 0) {
       return this.total_amount - this.ecash - this.data.d_charges;
     } else {
-      return this.total_amount - this.ecash;
+      return this.total_amount - this.ecash + this.extradeliveryCharge;
     }
   }
 
   ionViewWillEnter() {
+    this.server.getCoordinates(localStorage.getItem("restaurant")).subscribe((response: any) => {
+      this.restaurant = response.results[0].geometry.location
+    })
     if (
       !localStorage.getItem("user_id") ||
       localStorage.getItem("user_id") == "null"
@@ -85,10 +98,60 @@ export class CheckoutPage implements OnInit {
     }
   }
 
-  setAddress(id) {
-    this.address = id;
+  async setAddress(a) {
+  
+
+    this.server.getCoordinates(a.address).subscribe((response: any) => {
+
+
+      let deliverTo = response.results[0].geometry.location
+      this.getDistance(this.restaurant, deliverTo).then((results:any) =>{
+        let extradistance = ( results/ 1000) - 20      
+        this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * 5) : 0
+    
+      })
+      // .catch only runs when promise is rejected
+      .catch(async (status)=> {
+        const loading = await this.loadingController.create({
+          message: "Something went wrong.",
+          mode: "ios",
+        });
+        await loading.present();
+      });
+     
+    });
+ 
+    this.address = a.id;
   }
 
+
+  async getDistance(ori, dest) {
+
+    let service = new google.maps.DistanceMatrixService;
+    let origin = `${ori.lat},${ori.lng}`;
+    let destination = `${dest.lat},${dest.lng}`;
+    let output=0;
+    return new Promise(function(resolve, reject) {
+      service.getDistanceMatrix({
+        origins: [origin],
+        destinations: [destination],
+        travelMode: 'DRIVING',
+        unitSystem: google.maps.UnitSystem.METRIC,
+        avoidHighways: false,
+        avoidTolls: false
+      }, function (response, status) {
+        if (status !== 'OK') {
+         
+          reject(status);
+        } else {
+           resolve(response.rows[0].elements[0].distance.value);
+        }
+  
+      });
+
+    })
+  }
+ 
   setType(id) {
     this.otype = id;
   }
@@ -121,20 +184,20 @@ export class CheckoutPage implements OnInit {
     this.server
       .getAddress(
         localStorage.getItem("user_id") +
-          "?cart_no=" +
-          localStorage.getItem("cart_no") +
-          "&lid=" +
-          lid +
-          "&lat=" +
-          localStorage.getItem("current_lat") +
-          "&lng=" +
-          localStorage.getItem("current_lng")
+        "?cart_no=" +
+        localStorage.getItem("cart_no") +
+        "&lid=" +
+        lid +
+        "&lat=" +
+        localStorage.getItem("current_lat") +
+        "&lng=" +
+        localStorage.getItem("current_lng")
       )
       .subscribe((response: any) => {
         this.data = response.data;
         this.total_amount = response.data.total;
         this.razor_key = response.data.r_id;
-
+        //this.restaurant = response.data.address
         if (response.data.admin.paypal_client_id) {
           this.paypal_id = response.data.admin.paypal_client_id;
         }

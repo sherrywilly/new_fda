@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { HttpClient,HttpHeaders } from '@angular/common/http';
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 
@@ -27,6 +27,7 @@ export class ServerService {
   }
 
   homepage(city_id) {
+    console.log('city_id'+city_id)
     return this.http
       .get(
         this.url +
@@ -210,5 +211,29 @@ export class ServerService {
     return this.http
       .post(this.url + "enquiry", data)
       .pipe(map((results) => results));
+  }
+  async distanceCalculate(origin,destination){
+    
+    const httpOptions = {
+      headers:
+      new HttpHeaders (
+      {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "http://localhost:8100",
+        
+      }),
+    withCredentials: true,
+    };
+    let url = 'https://maps.googleapis.com/maps/api/distancematrix/json?units=metric';
+    let key = 'AIzaSyCTQSMVfEcHr-9OvLuYgjhEsJTIoLN61ig';
+    
+    return await this.http.get(`${url}&origins=${origin.lat},${origin.lng}&destinations=${destination}&key=${key}`, httpOptions)
+   .pipe(map((results) => results));
+
+  }
+   getCoordinates(address){
+    let apiKey = 'AIzaSyCTQSMVfEcHr-9OvLuYgjhEsJTIoLN61ig';
+    let url = 'https://maps.googleapis.com/maps/api/geocode/json?address='+address+'&sensor=false&key='+apiKey
+    return  this.http.get((url)).pipe(map((results) => results));;
   }
 }

@@ -23,7 +23,7 @@ export class ItemPage implements OnInit {
 
    this.data = JSON.parse(localStorage.getItem('menu_item'));
    this.text = JSON.parse(localStorage.getItem('app_text'));
-
+   localStorage.setItem('restaurant', this.data.address)
 
   }
 

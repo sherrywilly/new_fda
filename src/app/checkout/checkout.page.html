@@ -72,7 +72,7 @@
           <ion-radio
             slot="start"
             value="{{ a.id }}"
-            (ionSelect)="setAddress(a.id)"
+            (ionSelect)="setAddress(a)"
             [checked]="a.id == address"
           ></ion-radio>
         </ion-item>
@@ -103,7 +103,16 @@
           ></ion-col
         >
       </ion-row>
+      <ion-row>
+        <h2> <b>Extra Delivery Charge</b></h2>
+      </ion-row>
+     
+          <ion-row>
+          <h3 >Rs.{{ extradeliveryCharge }}</h3>
+        </ion-row>
+  
     </ion-card-content>
+  
   </ion-card>
 
   <ion-card mode="ios">
