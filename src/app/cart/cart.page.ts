@@ -32,8 +32,10 @@ export class CartPage implements OnInit {
 
   	this.server.getCart(localStorage.getItem('cart_no')+"?lid="+lid+"&lat="+localStorage.getItem('current_lat')+"&lng="+localStorage.getItem('current_lng')).subscribe((response:any) => {
 	
-	  this.data = response.data;
-
+    this.data = response.data;
+    const restaurant_data = response.data
+    delete  restaurant_data.data
+    localStorage.setItem('restaurant_data', JSON.stringify(restaurant_data))
   	});
   }
 

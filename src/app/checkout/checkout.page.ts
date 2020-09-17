@@ -47,7 +47,7 @@ export class CheckoutPage implements OnInit {
   cardDetails: any = {};
   ecash: any = 0;
   orderData: any;
-  restaurant: any;
+  restaurant_data: any;
   addressCoords: any;
   extradeliveryCharge = 0
   constructor(
@@ -61,7 +61,7 @@ export class CheckoutPage implements OnInit {
     public nativeGeocoder: NativeGeocoder
   ) {
     this.text = JSON.parse(localStorage.getItem("app_text"));
-
+    this.restaurant_data = JSON.parse(localStorage.getItem("restaurant_data"))
   }
 
   ngOnInit() { }
@@ -83,9 +83,14 @@ export class CheckoutPage implements OnInit {
   }
 
   ionViewWillEnter() {
-    this.server.getCoordinates(localStorage.getItem("restaurant")).subscribe((response: any) => {
-      this.restaurant = response.results[0].geometry.location
+   
+    this.server.getCoordinates(`${this.restaurant_data.store}, ${localStorage.getItem("city_name")}`).subscribe((response: any) => {
+     
+      this.restaurant_data.location = response.results[0].geometry.location
+     
     })
+   
+
     if (
       !localStorage.getItem("user_id") ||
       localStorage.getItem("user_id") == "null"
@@ -99,15 +104,13 @@ export class CheckoutPage implements OnInit {
   }
 
   async setAddress(a) {
-  
-
     this.server.getCoordinates(a.address).subscribe((response: any) => {
 
 
       let deliverTo = response.results[0].geometry.location
-      this.getDistance(this.restaurant, deliverTo).then((results:any) =>{
+      this.getDistance(this.restaurant_data.location, deliverTo).then((results:any) =>{
         let extradistance = ( results/ 1000) - 20      
-        this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * 5) : 0
+        this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * this.restaurant_data.perkm) : 0
     
       })
       // .catch only runs when promise is rejected
