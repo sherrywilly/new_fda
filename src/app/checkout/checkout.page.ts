@@ -45,6 +45,7 @@ export class CheckoutPage implements OnInit {
   currencyIcon: string = "Rs.";
   razor_key = "";
   cardDetails: any = {};
+  isEcash:boolean=false;
   ecash: any = 0;
   orderData: any;
   restaurant_data: any;
@@ -66,15 +67,17 @@ export class CheckoutPage implements OnInit {
 
   ngOnInit() { }
 
-  setEcash(ec) {
-    if (ec > this.total_payable()) {
-      this.ecash = this.total_payable();
-    } else {
-      this.ecash = ec;
-    }
+  setEcash() {
+    this.ecash=0
+if(this.isEcash)
+  this.ecash = (this.data.user.ecash >= this.total_payable())? this.total_payable():this.data.user.ecash
+else
+this.ecash =0
+
   }
 
   total_payable() {
+
     if (this.otype == 2 && this.data.d_charges > 0) {
       return this.total_amount - this.ecash - this.data.d_charges;
     } else {
@@ -111,7 +114,7 @@ export class CheckoutPage implements OnInit {
       this.getDistance(this.restaurant_data.location, deliverTo).then((results:any) =>{
         let extradistance = ( results/ 1000) - 20      
         this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * this.restaurant_data.perkm) : 0
-    
+        this.setEcash()
       })
       // .catch only runs when promise is rejected
       .catch(async (status)=> {
@@ -157,6 +160,7 @@ export class CheckoutPage implements OnInit {
  
   setType(id) {
     this.otype = id;
+    this.setEcash()
   }
 
   formVal() {

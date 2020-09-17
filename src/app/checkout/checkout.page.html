@@ -22,8 +22,8 @@
           <ion-label>{{ text.wallet_desc }} {{ data.user.ecash }}</ion-label>
           <ion-checkbox
             slot="start"
-            value="1"
-            (ionChange)="setEcash(data.user.ecash)"
+            value="data.user.ecash"
+            [(ngModel)]="isEcash" (ionChange)="setEcash(isEcash)"
           ></ion-checkbox>
         </ion-item>
       </ion-list>
