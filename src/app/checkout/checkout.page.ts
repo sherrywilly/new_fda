@@ -109,11 +109,11 @@ this.ecash =0
   async setAddress(a) {
     this.server.getCoordinates(a.address).subscribe((response: any) => {
 
-
+      let perkm = this.restaurant_data.perkm? this.restaurant_data.perkm:0
       let deliverTo = response.results[0].geometry.location
       this.getDistance(this.restaurant_data.location, deliverTo).then((results:any) =>{
         let extradistance = ( results/ 1000) - 20      
-        this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * this.restaurant_data.perkm) : 0
+        this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * perkm) : 0
         this.setEcash()
       })
       // .catch only runs when promise is rejected
@@ -254,6 +254,8 @@ this.ecash =0
       address: addr,
       cart_no: localStorage.getItem("cart_no"),
       payment_id: this.payment_id,
+      total:this. total_payable() ,
+      d_charges:Number(this.data.d_charges)+Number(this.extradeliveryCharge),
       otype: this.otype,
       notes: this.notes,
       ecash: this.ecash,

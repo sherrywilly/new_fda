@@ -156,7 +156,6 @@ intr:any;
     this.nativeGeocoder.reverseGeocode(lattitude, longitude, options)
       .then((result: NativeGeocoderResult[]) => {
         this.address = "";
-
         let responseAddress = [];
         for (let [key, value] of Object.entries(result[0])) {
   
