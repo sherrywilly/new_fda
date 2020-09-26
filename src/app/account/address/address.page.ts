@@ -56,7 +56,7 @@ export class AddressPage implements OnInit {
  
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
       
-      this.map.addListener('tilesloaded', () => {
+      this.map.addListener('bounds_changed', () => {
         this.getAddressFromCoords(this.map.center.lat(), this.map.center.lng())
       });
  
@@ -67,7 +67,6 @@ export class AddressPage implements OnInit {
  
 
   async getAddressFromCoords(lattitude, longitude) {
-    console.log("getAddressFromCoords "+lattitude+" "+longitude);
     let options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5

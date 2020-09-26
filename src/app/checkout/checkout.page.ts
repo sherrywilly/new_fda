@@ -107,12 +107,13 @@ this.ecash =0
   }
 
   async setAddress(a) {
-    this.server.getCoordinates(a.address).subscribe((response: any) => {
+
 
       let perkm = this.restaurant_data.perkm? this.restaurant_data.perkm:0
-      let deliverTo = response.results[0].geometry.location
+      let deliverTo ={lat: a.lat, lng: a.lng}
       this.getDistance(this.restaurant_data.location, deliverTo).then((results:any) =>{
-        let extradistance = ( results/ 1000) - 20      
+        let extradistance = ( results/ 1000) - 5
+        console.log('extradistance',extradistance)     
         this.extradeliveryCharge = extradistance > 0 ? Math.floor(extradistance * perkm) : 0
         this.setEcash()
       })
@@ -125,7 +126,7 @@ this.ecash =0
         await loading.present();
       });
      
-    });
+   
  
     this.address = a.id;
   }
@@ -136,7 +137,6 @@ this.ecash =0
     let service = new google.maps.DistanceMatrixService;
     let origin = `${ori.lat},${ori.lng}`;
     let destination = `${dest.lat},${dest.lng}`;
-    let output=0;
     return new Promise(function(resolve, reject) {
       service.getDistanceMatrix({
         origins: [origin],
@@ -150,6 +150,7 @@ this.ecash =0
          
           reject(status);
         } else {
+          console.log(response.rows[0].elements[0].distance.value)
            resolve(response.rows[0].elements[0].distance.value);
         }
   

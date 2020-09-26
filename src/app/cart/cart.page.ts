@@ -12,6 +12,7 @@ import { OfferPage } from '../offer/offer.page';
 export class CartPage implements OnInit {
 
   data:any;
+  items:any;
   fakeData = [1,2,3,4,5,6,7];
   discount:any;
   text:any;
@@ -31,10 +32,12 @@ export class CartPage implements OnInit {
     var lid = localStorage.getItem('lid') ? localStorage.getItem('lid') : 0;
 
   	this.server.getCart(localStorage.getItem('cart_no')+"?lid="+lid+"&lat="+localStorage.getItem('current_lat')+"&lng="+localStorage.getItem('current_lng')).subscribe((response:any) => {
-	
+    
     this.data = response.data;
-    const restaurant_data = response.data
-    delete  restaurant_data.data
+    let {data, ...restaurant_data} = response.data
+
+  //  // const restaurant_data = response.data
+  //   delete  restaurant_data.data
     localStorage.setItem('restaurant_data', JSON.stringify(restaurant_data))
   	});
   }
