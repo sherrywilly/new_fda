@@ -193,7 +193,7 @@ async presentAlertConfirm() {
     {
       if(response.data.force == "1")
       {
-        this.presentAlertConfirmVersion();
+       // this.presentAlertConfirmVersion();
       }
     }
 
