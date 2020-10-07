@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ServerService } from '../../service/server.service';
 import { ToastController,NavController,Platform,LoadingController } from '@ionic/angular';
-
 @Component({
   selector: 'app-how',
   templateUrl: './how.page.html',

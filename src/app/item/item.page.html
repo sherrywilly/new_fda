@@ -119,7 +119,7 @@
               size="small"
               fill="outline"
               *ngIf="item.count == 1 && item.addon.length == 0"
-              (click)="addToCart(item,item.price,1)"
+              (click)="addToCart(item.id,item.price,1)"
               >{{ text.item_add_button }}</ion-button
             >
 

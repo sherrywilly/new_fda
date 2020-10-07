@@ -344,8 +344,11 @@ async presentAlertConfirm() {
 
   itemPage(storeData)
   {
-    localStorage.setItem('menu_item', JSON.stringify(storeData));
+    if(storeData.open)
+    {
+      localStorage.setItem('menu_item', JSON.stringify(storeData));
     
-    this.nav.navigateForward('/item');
+      this.nav.navigateForward('/item');
+    }
   }
 }
