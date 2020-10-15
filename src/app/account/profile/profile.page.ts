@@ -10,7 +10,7 @@ import { ToastController,NavController,Platform,LoadingController } from '@ionic
 })
 
 export class ProfilePage implements OnInit {
-@ViewChild('content',{static:false}) private content: any;
+@ViewChild('content') private content: any;
 
 data:any;
 action:any;

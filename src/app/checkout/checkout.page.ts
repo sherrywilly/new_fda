@@ -271,13 +271,14 @@ this.ecash =0
     });
   }
 
+
   payWithRazor() {
     var options = {
       description: "Online Delivery",
-      image: "https://i.imgur.com/m9BgS7v.png",
+      image: "https://i.imgur.com/79uXpfm.png",
       currency: this.currency,
       key: this.razor_key,
-      amount: this.total_amount * 100,
+      amount: this. total_payable() * 100,
       name: "Door Bee",
       prefill: {
         email: this.data.user.email,

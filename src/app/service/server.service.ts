@@ -8,7 +8,7 @@ import { map } from "rxjs/operators";
 })
 export class ServerService {
   //put /api/ after your url e.g https://www.abc.com/api/
-  url = "http://power.doorbee.in/api/";
+  url = "https://power.doorbee.in/api/";
 
   constructor(private http: HttpClient) {}
 
